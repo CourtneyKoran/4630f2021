@@ -1,9 +1,9 @@
-#Wed Sep 29 10:46:20 EDT 2021
-base.2=C\:\\Users\\Courtney\\AndroidStudioProjects\\2_firstApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\10\\classes.dex
+#Wed Sep 29 21:35:23 EDT 2021
+base.2=C\:\\Users\\Courtney\\mobile_apps\\git_repos\\4630f2021\\2_firstApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\10\\classes.dex
 path.2=10/classes.dex
-base.1=C\:\\Users\\Courtney\\AndroidStudioProjects\\2_firstApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.1=C\:\\Users\\Courtney\\mobile_apps\\git_repos\\4630f2021\\2_firstApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
 path.1=0/classes.dex
-base.0=C\:\\Users\\Courtney\\AndroidStudioProjects\\2_firstApp\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+base.0=C\:\\Users\\Courtney\\mobile_apps\\git_repos\\4630f2021\\2_firstApp\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 renamed.2=classes3.dex
 renamed.1=classes2.dex
 renamed.0=classes.dex

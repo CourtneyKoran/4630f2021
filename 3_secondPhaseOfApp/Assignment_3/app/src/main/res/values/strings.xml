@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Assignment_3</string>
+    <string name="tab_text_1">Weather</string>
+    <string name="tab_text_2">About Me</string>
+    <string name="tab_text_3">Investment Portfolio</string>
+    <string name="tab_text_4">Resume</string>
+    <string name="currentLocation">The Temperature in Lowell, Massachusetts is: 52 degrees</string>
+    <string name="BirthLocation">The Temperature in Nashua, New Hampshire is: 50 degrees</string>
+    <string name="ParentLocation">The Temperature in Albany, New York is: 53 degrees</string>
+    <string name="BirthPlace">My Place of Birth: Nashua, New Hampshire.
+    Nashua is the second largest city in New Hampshire</string>
+    <string name="CurrentlyLive">Where I Currently Live: Hollis, New Hampshire.
+    I have lived in Hollis for 16 years. Hollis is known for its farming.</string>
+    <string name="WantToLive">Where I Would Like to Live: Hollis, New Hampshire.</string>
+    <string name="sigOther">Where My Significant Other Grew up: Acton, Massachusetts.</string>
+    <string name="myInvest">My Investment Portfolio</string>
+    <string name="parentsInvest">My Parents Investment Portfolio</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

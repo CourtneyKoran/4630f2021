@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "530587640744",
+    "project_id": "litternavbar",
+    "storage_bucket": "litternavbar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:530587640744:android:98b5ef1fbec63868b1f39d",
+        "android_client_info": {
+          "package_name": "com.example.litternavbar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "530587640744-emgrj5hl1ff5eisqkf8urc8m5hnskj7m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw34nEsy0yPfnyEAL6blPyXq4zQII0rVk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "530587640744-emgrj5hl1ff5eisqkf8urc8m5hnskj7m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

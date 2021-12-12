@@ -43,6 +43,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -86,11 +88,12 @@ public class ImpactFragment extends Fragment {
     double currentLatitude = 41.318480;
     double currentLongitude = -19.794428;
 
-    //FirebaseDatabase db = FirebaseDatabase.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-    //DatabaseReference litterData = db.getReference("litterLocations");
-    DocumentReference litterData = db.collection("litterLocations").document("Po1xF78Hb5jrYUjSMiE8");
+    DocumentReference userData = db.collection(user.getUid()).document("Po1xF78Hb5jrYUjSMiE8");
+
+    //DocumentReference litterData = db.collection("litterLocations").document("Po1xF78Hb5jrYUjSMiE8");
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("path/to/geofire");
 
 
@@ -109,15 +112,9 @@ public class ImpactFragment extends Fragment {
             @Override
             public void onMapReady(@NonNull GoogleMap googleMap) {
                 mMap = googleMap;
+                //mMap.clear();
+                displayLitter();
                 getLastLocation();
-                ExtendedFloatingActionButton fab = view.findViewById(R.id.fab);
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Snackbar.make(view, "Litter Recorded", Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-                    }
-                });
 
             }
         });
@@ -128,7 +125,28 @@ public class ImpactFragment extends Fragment {
 
     }
 
-
+    private void displayLitter() {
+        final List<Task<QuerySnapshot>> tasks = new ArrayList<>();
+        Query q = db.collection(user.getUid())
+                .orderBy("geohash");
+        tasks.add(q.get());
+        Tasks.whenAllComplete(tasks)
+                .addOnCompleteListener(new OnCompleteListener<List<Task<?>>>() {
+                    @Override
+                    public void onComplete(@NonNull Task<List<Task<?>>> t) {
+                        for (Task<QuerySnapshot> task : tasks) {
+                            QuerySnapshot snap = task.getResult();
+                            for (DocumentSnapshot doc : snap.getDocuments()) {
+                                double tempLat = doc.getDouble("lat");
+                                double tempLon= doc.getDouble("lon");
+                                LatLng tempLocation = new LatLng(tempLat, tempLon);
+                                // adding marker to each location on google maps
+                                mMap.addMarker(new MarkerOptions().position(tempLocation).title("Marker"));
+                            }
+                        }
+                    }
+                });
+    }
     @SuppressLint("MissingPermission")
     private void getLastLocation() {
         // check if permissions are given
@@ -151,7 +169,7 @@ public class ImpactFragment extends Fragment {
                             currentLatitude= location.getLatitude();
                             currentLongitude= location.getLongitude();
 
-                            String geoHash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(currentLatitude, currentLongitude));
+                            /*String geoHash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(currentLatitude, currentLongitude));
 
                             Map<String, Object> locationRec = new HashMap<>();
                             locationRec.put("geohash", geoHash);
@@ -184,10 +202,11 @@ public class ImpactFragment extends Fragment {
                                             }
                                         }
                                     });
-                            LatLng currentLocation = new LatLng(currentLatitude, currentLongitude);
-                            // adding marker to each location on google maps
-                            mMap.addMarker(new MarkerOptions().position(currentLocation).title("Marker"));
 
+                            // adding marker to each location on google maps
+                            mMap.addMarker(new MarkerOptions().position(currentLocation).title("Marker"));*/
+
+                            LatLng currentLocation = new LatLng(currentLatitude, currentLongitude);
                             // below line is use to move camera.
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
 

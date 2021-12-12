@@ -12,16 +12,5 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         />
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/fab"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="end|bottom"
-        android:layout_marginEnd="41dp"
-        android:layout_marginBottom="41dp"
-        android:text="@string/MapLitter"
-        app:icon="@drawable/ic_my_icon"/>
 
 </RelativeLayout>

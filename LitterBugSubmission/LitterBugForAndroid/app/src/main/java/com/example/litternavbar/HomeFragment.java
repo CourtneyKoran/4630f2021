@@ -2,10 +2,12 @@ package com.example.litternavbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -23,9 +25,14 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class HomeFragment extends Fragment {
@@ -33,43 +40,24 @@ public class HomeFragment extends Fragment {
     List<AuthUI.IdpConfig> providers = Arrays.asList(
             new AuthUI.IdpConfig.EmailBuilder().build());
 
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     FirebaseUser user;
     Boolean successfulSignIn = Boolean.FALSE;
+    String userName;
+    long litterCount =  0;
 
-    private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
-            new FirebaseAuthUIActivityResultContract(),
-            new ActivityResultCallback<FirebaseAuthUIAuthenticationResult>() {
-                @Override
-                public void onActivityResult(FirebaseAuthUIAuthenticationResult result) {
-                    onSignInResult(result);
-                }
-            }
-    );
-
-    private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
-        IdpResponse response = result.getIdpResponse();
-        if (result.getResultCode() == this.getActivity().RESULT_OK) {
-            // Successfully signed in
-            user = FirebaseAuth.getInstance().getCurrentUser();
-            successfulSignIn = Boolean.TRUE;
-            // ...
-        } else {
-            // Sign in failed. If response is null the user canceled the
-            // sign-in flow using the back button. Otherwise check
-            // response.getError().getErrorCode() and handle the error.
-            // ...
-            successfulSignIn = Boolean.FALSE;
-        }
-    }
 
     public void signOut(View v) {
 
         AuthUI.getInstance()
-                .signOut(this.getContext())
+                .signOut(v.getContext())
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     public void onComplete(@NonNull Task<Void> task) {
 // ...
-                        Snackbar.make(v, "Unsuccessful Sign In", Snackbar.LENGTH_LONG)
+                        startActivity(new Intent(v.getContext(), SignInActivity.class));
+                        //finish();
+                        Snackbar.make(v, "Sign Out Complete", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                     }
                 });
@@ -81,12 +69,43 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        final Button button = view.findViewById(R.id.button_id2);
+        //Long litterCount;
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        userName = user.getDisplayName();
+
+        Log.d("HomeFragment", "User Display Name: "+userName);
+
+        DocumentReference docRef = db.collection("litterBugUsers").document(user.getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+
+                        Long litterCount = document.getLong("litterCount");
+                        Log.d("Home DB-Get", "litterCount: " + litterCount);
+                        TextView countTextView = (TextView) view.findViewById(R.id.countDisplay);
+                        countTextView.setText(String.valueOf(litterCount));
+
+                    } else {
+                        Log.d("Home DB-Get", "No such document");
+                    }
+                } else {
+                    Log.d("Home DB-Get", "get failed with ", task.getException());
+                }
+            }
+        });
+
+
+        final Button button = view.findViewById(R.id.button_id2);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 signOut(v);
+
                 user = FirebaseAuth.getInstance().getCurrentUser();
+
             }
         });
         return view;

@@ -17,6 +17,31 @@
         android:textSize="60sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:layout_width="246dp"
+        android:layout_height="41dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="495dp"
+        android:fontFamily="@font/source_sans_pro_extralight"
+        android:text="Welcome, Your Litter Pickup Count is: "
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/countDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="541dp"
+        android:fontFamily="@font/source_sans_pro_extralight"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
     <Button
         android:id="@+id/button_id2"
         android:layout_width="wrap_content"
